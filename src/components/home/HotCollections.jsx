@@ -7,10 +7,14 @@ import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from "keen-slider/react"
 
 const HotCollections = () => {
-    const [sliderRef] = useKeenSlider({
+  const [sliderRef] = useKeenSlider({
     loop: true,
+    mode: "free",
+    slides: {
+      perView: 6,
+      spacing: 15,
+    },
   })
-
 
   const { id } = useParams()
   const [NFT, setNFT] = useState([])
@@ -65,7 +69,7 @@ const HotCollections = () => {
           ))}
 
           </div>
-          
+
           </div>
         
       </div>
