@@ -7,14 +7,25 @@ import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from "keen-slider/react"
 
 const HotCollections = () => {
-  const [sliderRef] = useKeenSlider({
-    loop: true,
-    mode: "free",
-    slides: {
-      perView: 6,
-      spacing: 15,
+const [sliderRef] = useKeenSlider({
+  loop: true,
+  mode: "snap",
+  slides: {
+    perView: 1, 
+    spacing: 15,
+  },
+  breakpoints: {
+    "(min-width: 640px)": {
+      slides: { perView: 2 },
     },
-  })
+    "(min-width: 768px)": {
+      slides: { perView: 3 },
+    },
+    "(min-width: 1024px)": {
+      slides: { perView: 4 },
+    },
+  },
+})
 
   const { id } = useParams()
   const [NFT, setNFT] = useState([])
@@ -45,7 +56,7 @@ const HotCollections = () => {
         <div ref={sliderRef} className="keen-slider">
           
           {NFT.map((NFT) => (
-            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={NFT.index}>
+             <div className="keen-slider__slide" key={NFT.index}>
               <div className="nft_coll">
                 <div className="nft_wrap">
                   <Link to="/item-details">
