@@ -9,18 +9,29 @@ import Skeleton from "../components/UI/Skeleton";
 const Author = () => {
 
     const { id } = useParams();
-    const [author, setAuthor] = useState([]);
+    const [author, setAuthor] = useState({});
+    const [nftCollection, setNftCollection] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isFollowed, setIsFollowed] = useState(false);
 
     async function fetchAuthor() {
     const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`);
     setAuthor(data);
+    setNftCollection(data.nftCollection || []);
     setLoading(false);
   }
   
   useEffect(() => {
     fetchAuthor();
   }, [id]);
+
+  const handleFollowClick = () => {
+    setIsFollowed(!isFollowed);
+    setAuthor({
+      ...author,
+      followers: isFollowed ? author.followers - 1 : author.followers + 1
+    });
+  };
 
   return (
     <div id="wrapper">
@@ -59,45 +70,45 @@ const Author = () => {
                     </div>
                   </div>
                 ) : (
-                <div className="d_profile de-flex">
-                  <div className="de-flex-col">
-                    <div className="profile_avatar">
-                      <img src={author.authorImage} alt="" />
+                  <div className="d_profile de-flex">
+                    <div className="de-flex-col">
+                      <div className="profile_avatar">
+                        <img src={author.authorImage} alt="" />
 
-                      <i className="fa fa-check"></i>
-                      <div className="profile_name">
-                        <h4>
-                          {author.authorName}
-                          <span className="profile_username">{`@${author.tag}`}</span>
-                          <span id="wallet" className="profile_wallet">
-                            {author.address}
-                          </span>
-                          <button id="btn_copy" title="Copy Text">
-                            Copy
-                          </button>
-                        </h4>
+                        <i className="fa fa-check"></i>
+                        <div className="profile_name">
+                          <h4>
+                            {author.authorName}
+                            <span className="profile_username">{`@${author.tag}`}</span>
+                            <span id="wallet" className="profile_wallet">
+                              {author.address}
+                            </span>
+                            <button id="btn_copy" title="Copy Text">
+                              Copy
+                            </button>
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="profile_follow de-flex">
+                      <div className="de-flex-col">
+                        <div className="profile_follower">{author.followers} followers</div>
+                        <button className="btn-main" onClick={handleFollowClick}>
+                          {isFollowed ? "Unfollow" : "Follow"}
+                        </button>
                       </div>
                     </div>
                   </div>
-                  <div className="profile_follow de-flex">
-                    <div className="de-flex-col">
-                      <div className="profile_follower">{author.followers} followers</div>
-                      <Link to="#" className="btn-main">
-                        Follow
-                      </Link>
-                    </div>
-                  </div>
-                </div>
                 )}
               </div>
 
               <div className="col-md-12">
-                {loading ? (
-                  <div className="de_tab tab_simple">
+                <div className="de_tab tab_simple">
+                  {loading ? (
                     <div className="de_tab_content">
                       <div className="tab-1">
                         <div className="row">
-                          {new author.nftCollection.map((_, index) => (
+                          {new Array(8).fill(0).map((_, index) => (
                             <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
                               <div className="nft__item">
                                 <div className="author_list_pp">
@@ -117,12 +128,10 @@ const Author = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
-                ) : (
-                <div className="de_tab tab_simple">
-                  <AuthorItems />
+                  ) : (
+                    <AuthorItems authorImage={author.authorImage} nftCollection={nftCollection} />
+                  )}
                 </div>
-                )}
               </div>
             </div>
           </div>
