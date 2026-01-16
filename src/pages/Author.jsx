@@ -22,7 +22,7 @@ const Author = () => {
   
   useEffect(() => {
     fetchAuthor();
-  }, [id]);
+  }, [id, fetchAuthor]);
 
   const handleFollowClick = () => {
     setIsFollowed(!isFollowed);

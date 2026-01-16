@@ -44,7 +44,7 @@ const [sliderRef, slider] = useKeenSlider({
   if (slider.current) {
     slider.current.update()
   }
-}, [NFT])
+}, [NFT, slider])
 
   return (
     <section id="section-collections" className="no-bottom">

@@ -18,7 +18,7 @@ const ItemDetails = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchItem();
-  }, []);
+  }, [id, fetchItem]);
 
   return (
     <div id="wrapper">
