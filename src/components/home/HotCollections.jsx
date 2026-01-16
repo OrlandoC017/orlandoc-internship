@@ -71,12 +71,12 @@ const [sliderRef, slider] = useKeenSlider({
     <div className="keen-slider__slide" key={NFT.index}>
       <div className="nft_coll">
         <div className="nft_wrap">
-          <Link to="/item-details">
+          <Link to={`/item-details/${NFT.nftId}`}>
             <img src={NFT.nftImage} className="lazy img-fluid" alt="" />
           </Link>
         </div>
         <div className="nft_coll_pp">
-          <Link to="/author">
+          <Link to={`/author/${NFT.authorId}`}>
             <img className="lazy pp-coll" src={NFT.authorImage} alt="" />
           </Link>
           <i className="fa fa-check"></i>
