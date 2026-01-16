@@ -21,8 +21,8 @@ const Home = () => {
         <div data-aos="zoom-out"><Landing /></div>
         <div data-aos="fade-left"><LandingIntro /></div>
         <div data-aos="zoom-in-up"><HotCollections /></div>
-        <div data-aos="zoom-in-up"><NewItems /></div>
-        <div data-aos="flip-left"><TopSellers /></div>
+        <div data-aos="zoom-in-down"><NewItems /></div>
+        <div data-aos="flip-down"><TopSellers /></div>
         <div data-aos="flip-left"><BrowseByCategory /></div>
       </div>
     </div>
