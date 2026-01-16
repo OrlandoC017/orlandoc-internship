@@ -1,7 +1,5 @@
-import React, { useEffect, useState, } from "react";
+import { useEffect, useState, } from "react";
 import { Link, useParams } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
-import nftImage from "../../images/nftImage.jpg";
 import axios from 'axios'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from "keen-slider/react"

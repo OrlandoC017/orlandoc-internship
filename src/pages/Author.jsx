@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
-import { Link, useParams } from "react-router-dom";
-import AuthorImage from "../images/author_thumbnail.jpg";
+import { useParams } from "react-router-dom";
 import Skeleton from "../components/UI/Skeleton";
 
 const Author = () => {
