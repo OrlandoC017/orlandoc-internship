@@ -5,12 +5,14 @@ import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
 import "keen-slider/keen-slider.min.css";
 import { useKeenSlider } from "keen-slider/react";
+import ArrowLeft from "../../images/ArrowLeft.svg"
+import ArrowRight from "../../images/ArrowRight.svg"
 
 const NewItems = () => {
   const { id } = useParams();
   const [NFT, setNFT] = useState([]);
 
-  const [sliderRef] = useKeenSlider({
+  const [sliderRef, slider] = useKeenSlider({
     loop: true,
     mode: "snap",
     slides: {
@@ -39,8 +41,14 @@ const NewItems = () => {
   }
 
   useEffect(() => {
-    fetchNFT(id);
-  }, [id]);
+    fetchNFT(id)
+  }, [id])
+
+  useEffect(() => {
+  if (slider.current) {
+    slider.current.update()
+  }
+}, [NFT])
 
   return (
     <section id="section-items" className="no-bottom">
@@ -52,8 +60,16 @@ const NewItems = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
+<div className="slider-wrapper">
+  <button
+    className="slider-arrow left"
+    onClick={() => slider.current?.prev()}
+  >
+    <img src={ArrowLeft} alt="Left Arrow" />
+  </button>
 
           <div ref={sliderRef} className="keen-slider">
+            
             {NFT.map((NFT) => (
               <div className="keen-slider__slide" key={NFT.index}>
                 <div className="nft__item">
@@ -89,7 +105,7 @@ const NewItems = () => {
                       </div>
                     </div>
 
-                    <Link to="/item-details">
+                    <Link to={`/item-details/${NFT.id}`}>
                       <img
                         src={NFT.nftImage}
                         className="lazy nft__item_preview"
@@ -98,8 +114,8 @@ const NewItems = () => {
                     </Link>
                   </div>
                   <div className="nft__item_info">
-                    <Link to="/item-details">
-                      <h4>Pinky Ocean</h4>
+                    <Link to={`/item-details/${NFT.id}`}>
+                      <h4>{NFT.title}</h4>
                     </Link>
                     <div className="nft__item_price">3.08 ETH</div>
                     <div className="nft__item_like">
@@ -110,10 +126,19 @@ const NewItems = () => {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
+      
       </div>
-    </section>
+  <button
+    className="slider-arrow right"
+    onClick={() => slider.current?.next()}
+  >
+    <img src={ArrowRight} alt="Right Arrow" />
+  </button>
+</div>
+
+    </div>
+  </div>
+</section>
   );
 };
 

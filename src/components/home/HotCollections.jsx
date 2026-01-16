@@ -5,9 +5,11 @@ import nftImage from "../../images/nftImage.jpg";
 import axios from 'axios'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from "keen-slider/react"
+import ArrowLeft from "../../images/ArrowLeft.svg"
+import ArrowRight from "../../images/ArrowRight.svg"
 
 const HotCollections = () => {
-const [sliderRef] = useKeenSlider({
+const [sliderRef, slider] = useKeenSlider({
   loop: true,
   mode: "snap",
   slides: {
@@ -40,6 +42,12 @@ const [sliderRef] = useKeenSlider({
     fetchNFT(id)
   }, [id])
 
+  useEffect(() => {
+  if (slider.current) {
+    slider.current.update()
+  }
+}, [NFT])
+
   return (
     <section id="section-collections" className="no-bottom">
       <div className="container">
@@ -51,38 +59,55 @@ const [sliderRef] = useKeenSlider({
             </div>
           </div>
 
-          
+        <div className="slider-wrapper">
 
-        <div ref={sliderRef} className="keen-slider">
-          
-          {NFT.map((NFT) => (
-             <div className="keen-slider__slide" key={NFT.index}>
-              <div className="nft_coll">
-                <div className="nft_wrap">
-                  <Link to="/item-details">
-                    <img src={NFT.nftImage} className="lazy img-fluid" alt="" />
-                  </Link>
-                </div>
-                <div className="nft_coll_pp">
-                  <Link to="/author">
-                    <img className="lazy pp-coll" src={NFT.authorImage} alt="" />
-                  </Link>
-                  <i className="fa fa-check"></i>
-                </div>
-                <div className="nft_coll_info">
-                  <Link to="/explore">
-                    <h4>{NFT.title}</h4>
-                  </Link>
-                  <span>ERC-{NFT.code}</span>
-                </div>
-              </div>
-            </div>
-          ))}
+   <button
+    className="slider-arrow left"
+    onClick={() => slider.current?.prev()}
+  >
+    <img src={ArrowLeft} alt="Left Arrow" />
+  </button>         
+
+<div ref={sliderRef} className="keen-slider">
+  {NFT.map((NFT) => (
+    <div className="keen-slider__slide" key={NFT.index}>
+      <div className="nft_coll">
+        <div className="nft_wrap">
+          <Link to="/item-details">
+            <img src={NFT.nftImage} className="lazy img-fluid" alt="" />
+          </Link>
+        </div>
+        <div className="nft_coll_pp">
+          <Link to="/author">
+            <img className="lazy pp-coll" src={NFT.authorImage} alt="" />
+          </Link>
+          <i className="fa fa-check"></i>
+        </div>
+        <div className="nft_coll_info">
+          <Link to="/explore">
+            <h4>{NFT.title}</h4>
+          </Link>
+          <span>ERC-{NFT.code}</span>
+        </div>
+      </div>
+    </div>
+  ))}
+
+
+
+
+</div>
+
+  <button
+    className="slider-arrow right"
+    onClick={() => slider.current?.next()}
+  >
+    <img src={ArrowRight} alt="Right Arrow" />
+  </button>
 
           </div>
 
-          </div>
-        
+        </div>
       </div>
     </section>
   );
